@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     const fecthUserData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/v1/getUser");
+        const res = await axios.get("/api/api/v1/getUser");
         const data = res.data.data;
         setUserData(data);
       } catch (error) {
@@ -32,7 +32,7 @@ function App() {
 
   const handleClick = () => {
     try {
-      const res = axios.post("http://localhost:5000/api/v1/postUser", form);
+      const res = axios.post("/api/api/v1/postUser", form);
 
       if (res.status == 201) {
         console.log("from sumbitted");
