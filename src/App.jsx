@@ -10,7 +10,7 @@ function App() {
     password: ""
   });
 
-  console.log(form);
+  console.log();
   
 
   const handleChange = (e) => {
@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await axios.get("/api/api/v1/getUser");
+        const res = await axios.get("http://localhost:5000/api/v1/getUser");
         setUserData(res.data.data || []);
       } catch (error) {
         console.log(error);
@@ -40,13 +40,13 @@ function App() {
     }
 
     try {
-      const res = await axios.post("/api/api/v1/postUser", form);
+      const res = await axios.post("http://localhost:5000/api/v1/postUser", form);
 
       if (res.status === 201) {
         console.log("Form submitted");
         setForm({ name: "", email: "", password: "" }); // Reset all fields
         // Refresh user list after adding
-        const updatedUsers = await axios.get("/api/api/v1/getUser");
+        const updatedUsers = await axios.get("http://localhost:5000/api/v1/getUser");
         setUserData(updatedUsers.data.data || []);
       }
     } catch (error) {
@@ -97,6 +97,8 @@ function App() {
           </button>
         </div>
       </div>
+
+
 
       {/* Right side (User list) */}
       <div className="w-1/2 p-6 overflow-y-auto">
