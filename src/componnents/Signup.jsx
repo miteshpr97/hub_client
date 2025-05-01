@@ -1,9 +1,10 @@
-
+import axios from "axios";
 import {useState } from "react";
 
-const Login = () => {
+const Signup = () => {
 
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -19,12 +20,25 @@ const Login = () => {
   };
 
   const handleClick = async () => {
-    if ( !form.email.trim() || !form.password.trim()) {
+    if (!form.name.trim() || !form.email.trim() || !form.password.trim()) {
       alert("Please fill in all fields!");
       return;
     }
 
-   
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/v1/postUser",
+        form
+      );
+
+      if (res.status === 201) {
+        console.log("Form submitted");
+        setForm({ name: "", email: "", password: "" }); // Reset all fields
+       
+      }
+    } catch (error) {
+      console.log("Error occurred:", error);
+    }
   };
 
 
@@ -34,9 +48,18 @@ const Login = () => {
       <div className="w-full p-6 ">
         <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">
-            Login
+            Add User
           </h2>
 
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Enter name"
+            className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
           <input
             type="email"
             name="email"
@@ -60,7 +83,7 @@ const Login = () => {
             onClick={handleClick}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded transition duration-300 cursor-pointer"
           >
-            Login
+            Submit
           </button>
         </div>
       </div>
@@ -70,4 +93,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

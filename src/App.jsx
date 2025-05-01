@@ -1,10 +1,13 @@
 import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Navbar from "./componnents/Navbar";
-import Footer from "./componnents/Footer";
+import UserList from "./pages/UserList";
+import Signup from "./componnents/Signup";
+import MainLayout from "./layouts/MainLayout";
+import AuthLayout from "./layouts/AuthLayout";
+import Cart from "./componnents/Cart";
 
-// Lazy-loaded components
+// Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const Courses = lazy(() => import("./pages/Courses"));
@@ -15,15 +18,18 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
 
-
 function App() {
   return (
-    <>
-      <Navbar />
-
-      <Suspense fallback={<div className="text-center mt-10">Loading...</div>}>
-        <Routes>
+    <Suspense fallback={<div className="text-center mt-10">Loading...</div>}>
+      <Routes>
+        {/* Auth Layout Routes */}
+        <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+
+        {/* Main Layout Routes */}
+        <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/about" element={<About />} />
@@ -32,12 +38,12 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
-        
-        </Routes>
-      </Suspense>
+          <Route path="/userList" element={<UserList />} />
+          <Route path="/cart" element={<Cart />} />
 
-      <Footer />
-    </>
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 
