@@ -1,5 +1,6 @@
 import axios from "axios";
-import {useState } from "react";
+import { useState } from "react";
+import { BASE_URL } from "../utils/constants";
 
 const Signup = () => {
 
@@ -27,14 +28,14 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/v1/postUser",
+        BASE_URL + "/api/v1/postUser",
         form
       );
 
       if (res.status === 201) {
         console.log("Form submitted");
         setForm({ name: "", email: "", password: "" }); // Reset all fields
-       
+
       }
     } catch (error) {
       console.log("Error occurred:", error);
@@ -88,7 +89,7 @@ const Signup = () => {
         </div>
       </div>
 
-      
+
     </div>
   );
 };

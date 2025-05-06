@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { BASE_URL } from "../utils/constants";
 
 const UserList = () => {
   const [userData, setUserData] = useState([]);
@@ -7,7 +8,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/v1/getUser");
+        const res = await axios.get(BASE_URL + "/api/v1/getUser");
         setUserData(res.data.data || []);
       } catch (error) {
         console.log(error);
@@ -18,14 +19,12 @@ const UserList = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:5000/api/v1/deleteUser/${userId}`
-      );
+      const res = await axios.delete(`${BASE_URL}/api/v1/deleteUser/${userId}`);
       if (res.status === 200) {
         console.log("user deleted successfully");
 
         const updatedUsers = await axios.get(
-          "http://localhost:5000/api/v1/getUser"
+         BASE_URL +  "/api/v1/getUser"
         );
         setUserData(updatedUsers.data.data || []);
       }

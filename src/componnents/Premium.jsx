@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 const Premium = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -19,7 +20,7 @@ const Premium = () => {
       console.log(orderDetails);
 
       const order = await axios.post(
-        "http://localhost:5000/api/v1/payment",
+        BASE_URL + "/api/v1/payment",
         orderDetails
       );
 

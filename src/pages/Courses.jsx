@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { BASE_URL } from "../utils/constants";
 
 // Hardcoded course data fallback
 const fallbackCourseData = [
@@ -83,7 +84,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/v1/products");
+        const res = await axios.get( BASE_URL + "/api/v1/products");
         const data = res.data;
         if ( data.products && data.products.length > 0) {
           setCourseData(data.products);
