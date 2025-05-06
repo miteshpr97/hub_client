@@ -1,4 +1,4 @@
-import React from "react";
+import React, {  useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 
@@ -6,6 +6,23 @@ const Premium = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const fullName = user?.name || "";
   const [firstName = "", lastName = ""] = fullName.split(" ");
+  const [isUserPremium, setIsUserPremium] = useState(false);
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
+  
+
+  const verifyPremiumUser = async () => {
+    const res = await axios.get(BASE_URL + "/premium/verify", {
+      withCredentials: true,
+    });
+
+    if (res.data.isPremium) {
+      setIsUserPremium(true);
+    }
+  };
+
+  // /payment/webhook
 
   const handleBuyClick = async (membershipType) => {
     try {
@@ -20,11 +37,9 @@ const Premium = () => {
       console.log(orderDetails);
 
       const order = await axios.post(
-        BASE_URL + "/api/v1/payment",
+        BASE_URL + "/payment/create",
         orderDetails
       );
-
-      console.log(order.data);
 
       const { amount, keyId, currency, notes, orderId } = order.data;
 
@@ -43,6 +58,7 @@ const Premium = () => {
         theme: {
           color: "#F37254",
         },
+        handler: verifyPremiumUser,
       };
 
       const rzp = new window.Razorpay(options);
@@ -57,7 +73,9 @@ const Premium = () => {
   if (!user || !user.name)
     return <div>Please login to view membership options.</div>;
 
-  return (
+  return isUserPremium ? (
+    "You're are already a premium user"
+  ) : (
     <div className="m-10">
       <div className="flex flex-col md:flex-row justify-center items-center gap-6">
         {/* Silver Membership Card */}
@@ -106,7 +124,9 @@ const Premium = () => {
         </div>
       </div>
     </div>
-  );
+  )
+
+
 };
 
 export default Premium;
