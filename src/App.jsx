@@ -6,6 +6,7 @@ import Signup from "./componnents/Signup";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import Cart from "./componnents/Cart";
+import Premium from "./componnents/Premium";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -40,6 +41,8 @@ function App() {
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/userList" element={<UserList />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/premium" element={<Premium />} />
+
 
         </Route>
       </Routes>

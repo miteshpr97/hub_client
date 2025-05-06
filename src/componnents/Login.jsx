@@ -1,6 +1,6 @@
 
 import {useState } from "react";
-
+import axios from "axios";
 const Login = () => {
 
   const [form, setForm] = useState({
@@ -18,13 +18,34 @@ const Login = () => {
     }));
   };
 
+
+  
   const handleClick = async () => {
-    if ( !form.email.trim() || !form.password.trim()) {
+    if (!form.email.trim() || !form.password.trim()) {
       alert("Please fill in all fields!");
       return;
     }
-
-   
+  
+    try {
+      const res = await axios.post("http://localhost:5000/api/v1/login", form);
+  
+      const { token, user, message } = res.data;
+  
+      // Save to localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+  
+      alert(message); // "Login successful"
+      // Optionally redirect to another page
+  
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Something went wrong");
+        console.log(error);
+      }
+    }
   };
 
 
