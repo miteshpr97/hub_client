@@ -29,7 +29,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        BASE_URL + "  /api/v1/login",
+        BASE_URL + "/api/v1/login",
         form);
 
       const { token, user, message } = res.data;
