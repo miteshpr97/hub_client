@@ -7,6 +7,8 @@ const Premium = () => {
   const fullName = user?.name || "";
   const [firstName = "", lastName = ""] = fullName.split(" ");
   const [isUserPremium, setIsUserPremium] = useState(false);
+
+
   useEffect(() => {
     verifyPremiumUser();
   }, []);
@@ -16,6 +18,10 @@ const Premium = () => {
     const res = await axios.get(BASE_URL + "/premium/verify", {
       withCredentials: true,
     });
+
+
+    console.log(res.data, "data show herere");
+    
 
     if (res.data.isPremium) {
       setIsUserPremium(true);
@@ -43,6 +49,11 @@ const Premium = () => {
 
       const { amount, keyId, currency, notes, orderId } = order.data;
 
+
+
+      console.log(order.data, "data show here");
+      
+
       const options = {
         key: keyId,
         amount,
@@ -60,6 +71,9 @@ const Premium = () => {
         },
         handler: verifyPremiumUser,
       };
+
+      console.log(options, "daat option");
+      
 
       const rzp = new window.Razorpay(options);
       rzp.open();

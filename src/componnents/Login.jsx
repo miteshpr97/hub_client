@@ -30,7 +30,10 @@ const Login = () => {
     try {
       const res = await axios.post(
         BASE_URL + "/api/v1/login",
-        form);
+        form,
+        { withCredentials: true }  
+      );
+      
 
       const { token, user, message } = res.data;
 
